@@ -1,14 +1,38 @@
-import { useEffect } from "react";
-import axios from "axios";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import { useState } from "react";
 
 function App() {
-  useEffect(() => {
-    axios.get("http://localhost:5000")
-      .then(res => console.log(res.data))
-      .catch(err => console.error(err));
-  }, []);
 
-  return <h1>ShopSmart</h1>;
+  const token = localStorage.getItem("token");
+  const [isLogin, setIsLogin] = useState(true);
+
+  if (!token) {
+    return (
+      <div>
+        {isLogin ? <Login /> : <Signup />}
+
+        <button onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "Go to Signup" : "Go to Login"}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>Welcome to ShopSmart!</h1>;
+
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }}
+      >
+        Logout
+      </button>
+    </div>
+  );
 }
 
 export default App;
