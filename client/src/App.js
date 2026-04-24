@@ -1,5 +1,6 @@
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 import { useState } from "react";
 
 function App() {
@@ -19,20 +20,7 @@ function App() {
     );
   }
 
-  return (
-    <div>
-      <h1>Welcome to ShopSmart!</h1>;
-
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          window.location.reload();
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  );
+  return <Dashboard />;
 }
 
 export default App;
