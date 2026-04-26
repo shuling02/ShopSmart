@@ -21,7 +21,10 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.delete("/:id", auth, async (req, res) => {
-    await Item.findByIdAndDelete(req.params.id);
+    await Item.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.user.id
+    });
     res.json("Item deleted");
 });
 

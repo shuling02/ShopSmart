@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/login.scss";
 import "../styles/navbar.scss";
@@ -16,6 +18,16 @@ function Signup() {
         email: "",
         password: ""
     });
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/profile")
+            .then(() => {
+                navigate("/dashboard");
+            })
+            .catch(() => { });
+    }, []);
 
     const handleChange = (e) => {
         setForm({
@@ -72,7 +84,7 @@ function Signup() {
 
     return (
         <div className="login-page">
-            
+
             <div className="login-container">
                 <div className="login-card">
 

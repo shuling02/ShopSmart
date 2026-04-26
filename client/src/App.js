@@ -10,51 +10,17 @@ import Footer from "./components/Footer";
 
 function App() {
 
-  const token = localStorage.getItem("token");
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
-  };
-
   return (
     <>
-      <Navbar
-        isLoggedIn={!!token}
-        onLogout={handleLogout}
-      />
+      <Navbar />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
-          }
-        />
-
-        <Route
-          path="/login"
-          element={token ? <Navigate to="/dashboard" /> : <Login />}
-        />
-        <Route
-          path="/signup"
-          element={token ? <Navigate to="/dashboard" /> : <Signup />}
-        />
-        <Route
-          path="/dashboard"
-          element={token ? <Dashboard /> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/profile"
-          element={token ? <Profile /> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/logout"
-          element={token ? <Logout /> : <Navigate to="/login" />}
-        />
-
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
 
       <Footer />

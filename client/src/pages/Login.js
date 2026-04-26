@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/login.scss";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/navbar.scss";
 
@@ -13,6 +14,16 @@ function Login() {
     });
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/profile")
+            .then(() => {
+                navigate("/dashboard");
+            })
+            .catch(() => {
+
+            });
+    }, []);
 
     const handleChange = (e) => {
         setForm({
@@ -34,10 +45,8 @@ function Login() {
                 "http://localhost:5000/api/auth/login",
                 form
             );
-
-            localStorage.setItem("token", res.data.token);
             
-            window.location.href = "/dashboard";
+            navigate("/dashboard");
 
             alert("Login successful");
         } catch (err) {

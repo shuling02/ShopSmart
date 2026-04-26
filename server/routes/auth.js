@@ -52,15 +52,24 @@ router.post("/login", async (req, res) => {
             { expiresIn: "1d"}
         );
 
-        res.json({
-            message: "Login successful",
-            token
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
         });
+
+        res.json({ message: "Login successful" });
+
     } catch (err) {
         console.error(err);
         res.status(500).json("Server error");
     }
 }); 
+
+router.post("/logout", (req, res) => {
+    res.clearCookie("token");
+    res.json({ message: "Logged out successfully" });
+});
 
 
 module.exports = router;

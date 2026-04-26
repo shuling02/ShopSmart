@@ -1,13 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/logout.scss";
+import axios from "axios";
+
 
 function Logout() {
     const navigate = useNavigate();
 
-    const handleConfirm = () => {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
+    const handleConfirm = async() => {
+        try {
+            await axios.post("http://localhost:5000/api/auth/logout", {}, {
+                withCredentials: true
+            });
+
+            navigate("/login");
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (

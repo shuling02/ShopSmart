@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next){
-    const token = req.header("Authorization");
+
+    const token = req.cookies.token;
 
     if(!token){
-        return res.stats(401).json("No token, access denied");
+        return res.status(401).json("Unauthorized");
     }
 
     try {

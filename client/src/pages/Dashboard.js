@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import "../styles/dashboard.scss";
@@ -13,19 +14,19 @@ function Dashboard() {
     const [editStore, setEditStore] = useState("");
     const [editingField, setEditingField] = useState(null);
     const [showForm, setShowForm] = useState(false);
-
-    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
     const fetchItems = async () => {
-        const res = await axios.get(
-            "http://localhost:5000/api/items",
-            {
-                headers: {
-                    Authorization: token
-                }
+        try {
+            const res = await axios.get("http://localhost:5000/api/items");
+            setItems(res.data);
+        } catch (err) {
+            if(err.response?.status === 401) {
+                navigate("/login");
+            } else{
+                console.error(err);
             }
-        );
-        setItems(res.data);
+        }
     };
 
     useEffect(() => {
@@ -43,12 +44,12 @@ function Dashboard() {
             return;
         }
 
-        if(!isValidText(name)){
+        if (!isValidText(name)) {
             alert("Item name cannot be only symbols");
             return;
         }
 
-        if(store.trim() && !isValidText(store)){
+        if (store.trim() && !isValidText(store)) {
             alert("Store name cannot be only symbols");
             return;
         }
@@ -57,11 +58,6 @@ function Dashboard() {
             await axios.post(
                 "http://localhost:5000/api/items",
                 { name, store, purchased: false },
-                {
-                    headers: {
-                        Authorization: token
-                    }
-                }
             );
             setName("")
             setStore("");
@@ -73,25 +69,12 @@ function Dashboard() {
     };
 
     const deleteItem = async (id) => {
-        await axios.delete(
-            `http://localhost:5000/api/items/${id}`,
-            {
-                headers: {
-                    Authorization: token
-                }
-            }
-        );
+        await axios.delete(`http://localhost:5000/api/items/${id}`);
         fetchItems();
     };
 
     const toggleItem = async (id) => {
-        await axios.put(
-            `http://localhost:5000/api/items/${id}`,
-            {},
-            {
-                headers: { Authorization: token }
-            }
-        );
+        await axios.put(`http://localhost:5000/api/items/${id}`);
 
         fetchItems();
     };
@@ -115,12 +98,12 @@ function Dashboard() {
             return;
         }
 
-        if(!isValidText(trimmedName)){
+        if (!isValidText(trimmedName)) {
             alert("Item name cannot be only symbols");
             return;
         }
 
-        if(trimmedStore && !isValidText(trimmedStore)){
+        if (trimmedStore && !isValidText(trimmedStore)) {
             alert("Store name cannot be only symbols");
             return;
         }
@@ -131,10 +114,7 @@ function Dashboard() {
 
         await axios.put(
             `http://localhost:5000/api/items/edit/${id}`,
-            { name: trimmedName, store: finalStore },
-            {
-                headers: { Authorization: token }
-            }
+            { name: trimmedName, store: finalStore }
         );
 
         setEditingId(null);
@@ -202,7 +182,7 @@ function Dashboard() {
                                             </span>
                                         )}
 
-                                        <button 
+                                        <button
                                             className="delete-btn"
                                             onClick={() => deleteItem(item._id)}
                                         >
@@ -236,7 +216,7 @@ function Dashboard() {
                     <button className="add-btn" onClick={() => setShowForm(true)}>
                         Add
                     </button>
-                    
+
                 </div>
             </div>
         </div>

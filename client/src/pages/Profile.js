@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/profile.scss";
 
@@ -14,21 +15,19 @@ function Profile() {
     });
 
     const [editing, setEditing] = useState(false);
-
-    const token = localStorage.getItem("token");
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await axios.get(
-                    "http://localhost:5000/api/profile",
-                    {
-                        headers: { Authorization: token }
-                    }
-                );
+                const res = await axios.get("http://localhost:5000/api/profile");
                 setProfile(res.data);
             } catch (err) {
-                console.error(err);
+                if(err.response?.status === 401) {
+                    navigate("/login");
+                } else{
+                    console.error(err);
+                }
             }
         };
 
@@ -52,10 +51,7 @@ function Profile() {
         try {
             const res = await axios.put(
                 "http://localhost:5000/api/profile",
-                profile,
-                {
-                    headers: { Authorization: token }
-                }
+                profile
             );
 
             setProfile(res.data);
@@ -86,7 +82,6 @@ function Profile() {
                 formData,
                 {
                     headers: {
-                        Authorization: token,
                         "Content-Type": "multipart/form-data"
                     }
                 }
