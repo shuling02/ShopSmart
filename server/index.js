@@ -18,6 +18,8 @@ app.use("/api/items", itemRoutes);
 const profileRoutes = require("./routes/profile");
 app.use("/api/profile", profileRoutes);
 
+app.use("/uploads", express.static("uploads"));
+
 app.get("/", (req, res) => {
     res.send("API is running...");
 });

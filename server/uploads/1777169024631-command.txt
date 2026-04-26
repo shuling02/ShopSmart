@@ -1,0 +1,12 @@
+cd android
+./gradlew clean
+cd ..
+npx react-native run-android
+
+git commit -m "[message]" --no-verify (used for committing no changes)
+
+cd cms
+npm run dev
+
+1/27/2026 (torus free class at Rockwood)
+
