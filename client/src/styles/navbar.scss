@@ -1,9 +1,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    padding: 16px 40px;
-    gap: 20px;
-    width: 100%;
+    padding: 12px 30px;
     background: #cceeff;
     justify-content: space-between;
     box-sizing: border-box;
@@ -11,12 +9,10 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
     .logo {
-        width: 80px;
-        height: 60px;
-        border: 2px solid #aaa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: auto;
+        height: 45px;
+        border: none;
+        object-fit: contain;
     }
 
     .nav-links {

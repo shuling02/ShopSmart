@@ -49,8 +49,6 @@ function Login() {
     return (
         <div className="login-page">
 
-            <Navbar isLoggedIn={false} />
-
             <div className="login-container">
 
                <div className="login-card">
@@ -62,7 +60,7 @@ function Login() {
                             <label>Email</label>
                             <input
                                 name="email"
-                                placeholder="Placeholder"
+                                placeholder="Email"
                                 onChange={handleChange}
                             />
                         </div>
@@ -72,7 +70,7 @@ function Login() {
                             <input
                                 name="password"
                                 type="password"
-                                placeholder="Placeholder"
+                                placeholder="Password"
                                 onChange={handleChange}
                             />
                         </div>

@@ -12,7 +12,6 @@ function Logout() {
 
     return (
         <div className="logout-page">
-            <Navbar isLoggedIn={true} />
 
             <div className="logout-container">
                 <div className="logout-card">

@@ -72,8 +72,6 @@ function Signup() {
 
     return (
         <div className="login-page">
-
-            <Navbar isLoggedIn={false} />
             
             <div className="login-container">
                 <div className="login-card">

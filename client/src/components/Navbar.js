@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
+import "../styles/navbar.scss";
 
 function Navbar({ isLoggedIn, onLogout }){
     return (
         <div className="navbar">
-            <div className="logo">Logo</div>
+            <img src="/logo.png" alt="logo" className="logo" />
 
             <div className="nav-links">
                 <NavLink to="/" end>Home</NavLink>

@@ -99,7 +99,6 @@ function Profile() {
 
     return (
         <div className="profile-page">
-            <Navbar isLoggedIn={true} />
 
             <div className="profile-container">
                 <div className="profile-card">

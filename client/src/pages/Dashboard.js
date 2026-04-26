@@ -146,14 +146,6 @@ function Dashboard() {
     return (
         <div className="dashboard-page">
 
-            <Navbar 
-                isLoggedIn={true}
-                onLogout={() => {
-                    localStorage.removeItem("token");
-                    window.location.reload();
-                }}
-            />
-
             <div className="dashboard-container">
                 <div className="dashboard-card">
 
