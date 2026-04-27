@@ -18,7 +18,9 @@ function Dashboard() {
 
     const fetchItems = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/items");
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/items`, {
+                withCredentials: true
+            });
             setItems(res.data);
         } catch (err) {
             if(err.response?.status === 401) {
@@ -56,8 +58,9 @@ function Dashboard() {
 
         try {
             await axios.post(
-                "http://localhost:5000/api/items",
+                `${process.env.REACT_APP_API_URL}/api/items`,
                 { name, store, purchased: false },
+                { withCredentials: true }
             );
             setName("")
             setStore("");
@@ -69,13 +72,18 @@ function Dashboard() {
     };
 
     const deleteItem = async (id) => {
-        await axios.delete(`http://localhost:5000/api/items/${id}`);
+        await axios.delete(
+            `${process.env.REACT_APP_API_URL}/api/items/${id}`,
+            { withCredentials: true }
+        );
         fetchItems();
     };
 
     const toggleItem = async (id) => {
-        await axios.put(`http://localhost:5000/api/items/${id}`);
-
+        await axios.put(
+            `${process.env.REACT_APP_API_URL}/api/items/${id}`,
+            { withCredentials: true }
+        );
         fetchItems();
     };
 
@@ -113,7 +121,8 @@ function Dashboard() {
         setEditingId(null);
 
         await axios.put(
-            `http://localhost:5000/api/items/edit/${id}`,
+            `${process.env.REACT_APP_API_URL}/api/items/edit/${id}`,
+            { withCredentials: true },
             { name: trimmedName, store: finalStore }
         );
 

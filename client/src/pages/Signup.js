@@ -22,7 +22,10 @@ function Signup() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/profile")
+        axios.get(
+            `${process.env.REACT_APP_API_URL}/api/profile`,
+            { withCredentials: true }
+        )
             .then(() => {
                 navigate("/dashboard");
             })
@@ -73,8 +76,9 @@ function Signup() {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/auth/signup",
-                form
+                 `${process.env.REACT_APP_API_URL}/api/auth/signup`,
+                form,
+                { withCredentials: true }
             );
             alert(res.data);
         } catch (err) {

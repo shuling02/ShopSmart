@@ -16,11 +16,14 @@ function Profile() {
 
     const [editing, setEditing] = useState(false);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/profile");
+                const res = await axios.get(
+                    `${process.env.REACT_APP_API_URL}/api/profile`,
+                    { withCredentials: true }
+                );
                 setProfile(res.data);
             } catch (err) {
                 if(err.response?.status === 401) {
@@ -50,8 +53,9 @@ function Profile() {
 
         try {
             const res = await axios.put(
-                "http://localhost:5000/api/profile",
-                profile
+                 `${process.env.REACT_APP_API_URL}/api/profile`,
+                profile,
+                 { withCredentials: true }
             );
 
             setProfile(res.data);
@@ -78,12 +82,13 @@ function Profile() {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/profile/upload",
+                `${process.env.REACT_APP_API_URL}/api/profile/upload`,
                 formData,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data"
-                    }
+                    },
+                    withCredentials: true
                 }
             );
             setProfile(res.data);
@@ -104,7 +109,7 @@ function Profile() {
                             
                             {profile.profileImage ? (
                                 <img
-                                    src={`http://localhost:5000${profile.profileImage}`}
+                                    src={`${process.env.REACT_APP_API_URL}${profile.profileImage}`}
                                     alt="profile"
                                 />
                             ) : (

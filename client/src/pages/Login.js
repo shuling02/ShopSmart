@@ -16,7 +16,10 @@ function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/profile")
+        axios.get(
+                `${process.env.REACT_APP_API_URL}/api/profile`,
+                { withCredentials: true }
+            )
             .then(() => {
                 navigate("/dashboard");
             })
@@ -42,8 +45,9 @@ function Login() {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/auth/login",
-                form
+                `${process.env.REACT_APP_API_URL}/api/auth/login`,
+                form,
+                { withCredentials: true }
             );
             
             navigate("/dashboard");

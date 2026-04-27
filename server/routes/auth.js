@@ -9,7 +9,7 @@ router.post("/signup", async (req, res) => {
 
         const existingUser = await User.findOne({ email });
 
-        if(existingUser) {
+        if (existingUser) {
             return res.status(400).json("User already exists");
         }
 
@@ -37,25 +37,25 @@ router.post("/login", async (req, res) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if(!user) {
+        if (!user) {
             return res.status(400).json("User not found");
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch){
+        if (!isMatch) {
             return res.status(400).json("Invalid password");
         }
 
         const token = jwt.sign(
-            { id: user._id},
+            { id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1d"}
+            { expiresIn: "1d" }
         );
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
         });
 
         res.json({ message: "Login successful" });
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
         console.error(err);
         res.status(500).json("Server error");
     }
-}); 
+});
 
 router.post("/logout", (req, res) => {
     res.clearCookie("token");
