@@ -7,13 +7,15 @@ import axios from "axios";
 function Logout() {
     const navigate = useNavigate();
 
-    const handleConfirm = async() => {
+    const handleConfirm = async () => {
         try {
-            await axios.post( `${process.env.REACT_APP_API_URL}/api/auth/logout`,{}, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {}, {
                 withCredentials: true
             });
 
             navigate("/login");
+            window.location.reload();
+
         } catch (err) {
             console.error(err);
         }

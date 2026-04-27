@@ -51,7 +51,8 @@ function Login() {
             );
             
             navigate("/dashboard");
-
+            window.location.reload();
+            
             alert("Login successful");
         } catch (err) {
             console.log(err.response);
